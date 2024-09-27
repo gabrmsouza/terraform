@@ -1,0 +1,34 @@
+// Resource - define o bloco de instruções
+// Local - define qual sera o provider
+// File - define o tipo do provider
+// Exemplo - é o nome do recurso a ser criado
+// esse resource cria um arquivo localmente
+resource "local_file" "exemplo" {
+    filename = "exemplo.txt"
+    content = var.conteudo
+}
+
+// le as informações de uma fonte externa
+data "local_file" "exemplo2" {
+    filename = "exemplo.txt"
+}
+
+// definição de uma variavel
+variable "conteudo" {
+    type = string
+    default = "Hello World"
+}
+
+// cria um output apenas com as inforamções necessárias
+output "file-id" {
+    // pega o id gerado pelo terraform do arquivo criado
+  value = resource.local_file.exemplo.id
+}
+
+output "conteudo" {
+    value = var.conteudo
+}
+
+output "datasource-result" {
+  value = data.local_file.exemplo2.content
+}
